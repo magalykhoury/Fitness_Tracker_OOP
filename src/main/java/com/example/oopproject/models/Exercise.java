@@ -2,9 +2,7 @@ package com.example.oopproject.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import lombok.Data;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 @Document(collection = "exercises")
@@ -13,41 +11,25 @@ public class Exercise {
     @Id
     private String id;
 
-    @NotBlank(message = "Exercise name is required")
     private String name;
-
-    private String description;
-
-    private List<String> muscleGroups;
-
-    private String equipment;
-    private String workoutId;
-
-    @Min(value = 1, message = "Difficulty level must be at least 1")
-    private int difficultyLevel;
-
-    private int sets;
-
     private int reps;
-
+    private int sets;
+    private String workoutId;
     private double weight;
-
+    private String equipment;
+    private int difficultyLevel;
+    private List<String> muscleGroups;
     public Exercise() {
     }
 
-    public Exercise(String name, String description, List<String> muscleGroups,
-                    String equipment, int difficultyLevel, int sets, int reps, double weight) {
+    public Exercise(String name, int reps, int sets, String workoutId, double weight, String equipment) {
         this.name = name;
-        this.description = description;
-        this.muscleGroups = muscleGroups;
-        this.equipment = equipment;
-        this.difficultyLevel = difficultyLevel;
-        this.sets = sets;
         this.reps = reps;
+        this.sets = sets;
+        this.workoutId = workoutId;
         this.weight = weight;
+        this.equipment = equipment;
     }
-
-    // Getters and setters below...
 
     public String getId() {
         return id;
@@ -65,36 +47,12 @@ public class Exercise {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public int getReps() {
+        return reps;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getMuscleGroups() {
-        return muscleGroups;
-    }
-
-    public void setMuscleGroups(List<String> muscleGroups) {
-        this.muscleGroups = muscleGroups;
-    }
-
-    public String getEquipment() {
-        return equipment;
-    }
-
-    public void setEquipment(String equipment) {
-        this.equipment = equipment;
-    }
-
-    public int getDifficultyLevel() {
-        return difficultyLevel;
-    }
-
-    public void setDifficultyLevel(int difficultyLevel) {
-        this.difficultyLevel = difficultyLevel;
+    public void setReps(int reps) {
+        this.reps = reps;
     }
 
     public int getSets() {
@@ -105,12 +63,12 @@ public class Exercise {
         this.sets = sets;
     }
 
-    public int getReps() {
-        return reps;
+    public String getWorkoutId() {
+        return workoutId;
     }
 
-    public void setReps(int reps) {
-        this.reps = reps;
+    public void setWorkoutId(String workoutId) {
+        this.workoutId = workoutId;
     }
 
     public double getWeight() {
@@ -120,25 +78,19 @@ public class Exercise {
     public void setWeight(double weight) {
         this.weight = weight;
     }
-    public String getWorkoutId() {
-        return workoutId;
+
+    public String getEquipment() {
+        return equipment;
     }
 
-    public void setWorkoutId(String workoutId) {
-        this.workoutId = workoutId;
+    public void setEquipment(String equipment) {
+        this.equipment = equipment;
     }
-    @Override
-    public String toString() {
-        return "Exercise{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", muscleGroups=" + muscleGroups +
-                ", equipment='" + equipment + '\'' +
-                ", difficultyLevel=" + difficultyLevel +
-                ", sets=" + sets +
-                ", reps=" + reps +
-                ", weight=" + weight +
-                '}';
+    public List<String> getMuscleGroups() {
+        return muscleGroups;
+    }
+
+    public void setMuscleGroups(List<String> muscleGroups) {
+        this.muscleGroups = muscleGroups;
     }
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Document(collection = "users")
 public class User {
-
+    private String role = "user";
     @Id
     private String id;
 
@@ -178,5 +178,12 @@ public class User {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
+    }
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
