@@ -42,7 +42,6 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
     implementation 'org.springframework.shell:spring-shell-starter:3.1.5'
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.11' // or the latest version
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // Mockito (Mocking framework for unit testing)

@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "com.fitnessapp.repositories")
+@EnableMongoRepositories(basePackages = "com.example.oopproject.repositories")
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Override
