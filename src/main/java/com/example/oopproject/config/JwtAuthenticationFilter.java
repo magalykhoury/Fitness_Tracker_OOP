@@ -17,14 +17,19 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Value("${jwt.secret}")
-    private String jwtSecret;
+    private final String jwtSecret;
+
+    // Constructor injection instead of @Value
+    public JwtAuthenticationFilter(@Value("${jwt.secret:defaultSecretKey123!@#}") String jwtSecret) {
+        this.jwtSecret = jwtSecret;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -35,7 +40,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             try {
-                SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+                // Use a more robust key generation
+                SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
 
                 Claims claims = Jwts.parserBuilder()
                         .setSigningKey(key)

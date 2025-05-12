@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +24,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
-        // In a real application, you'd validate credentials against a database
-        if ("admin".equals(loginRequest.getUsername()) && "admin 123".equals(loginRequest.getPassword())) {
+        // Note the change from "admin 123" to "admin123"
+        if ("admin".equals(loginRequest.getUsername()) && "admin123".equals(loginRequest.getPassword())) {
             String token = generateToken(loginRequest.getUsername());
 
             Map<String, String> response = new HashMap<>();
@@ -35,7 +36,7 @@ public class AuthController {
     }
 
     private String generateToken(String username) {
-        SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
 
         return Jwts.builder()
                 .setSubject(username)
