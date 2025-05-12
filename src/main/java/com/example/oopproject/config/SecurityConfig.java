@@ -24,11 +24,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Allow Swagger UI resources
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/api-docs/**").permitAll()
-                        // Allow authentication endpoints
                         .requestMatchers("/auth/**", "/api/auth/**").permitAll()
-                        // Secure all other endpoints
+                        .requestMatchers("/api/user/**").permitAll()  // ⬅️ Add this line
                         .anyRequest().authenticated());
 
         // Add JWT filter before UsernamePasswordAuthenticationFilter
