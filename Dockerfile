@@ -11,7 +11,8 @@ COPY system.properties .
 RUN chmod +x gradlew
 RUN ./gradlew build -x test
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:21-jdk-alpine
+
 VOLUME /tmp
 COPY --from=build /workspace/app/build/libs/*.jar app.jar
 EXPOSE 8080
