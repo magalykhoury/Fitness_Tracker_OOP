@@ -1,65 +1,53 @@
 package com.example.oopproject;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootApplication
 public class FitnessApiApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(FitnessApiApplication.class);
 
-    @Autowired
-    private Environment environment;
-
-    @Autowired
-    private MongoTemplate mongoTemplate;
-
     public static void main(String[] args) {
-        SpringApplication.run(FitnessApiApplication.class, args);
+        logger.info("Starting Fitness Tracker Application");
+        ApplicationContext ctx = SpringApplication.run(FitnessApiApplication.class, args);
+        logger.info("Application started successfully");
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void testMongoDbConnection() {
-        logger.info("Testing MongoDB connection...");
+    @Bean
+    public CommandLineRunner testConnection(Environment environment) {
+        return args -> {
+            logger.info("=====================================================");
+            logger.info("TESTING MONGODB CONNECTION");
+            logger.info("=====================================================");
 
-        try {
-            // Get and log active profiles
+            // Log active profiles
             String[] activeProfiles = environment.getActiveProfiles();
-            logger.info("Active profiles: {}", Arrays.toString(activeProfiles));
+            logger.info("Active profiles: {}", String.join(", ", activeProfiles));
 
-            // Get MongoDB URI from environment (safely masking password)
-            String mongoUriRaw = environment.getProperty("spring.data.mongodb.uri");
-            String mongoUri = mongoUriRaw != null
-                    ? mongoUriRaw.replaceAll("://[^:]+:([^@]+)@", "://*****:*****@")
-                    : "not set";
-            logger.info("MongoDB URI: {}", mongoUri);
+            // Test direct connection to MongoDB
+            String connectionString = "mongodb+srv://magaly:mohamad@cluster0.ientrf8.mongodb.net/fitness_tracker?retryWrites=true&w=majority";
+            logger.info("Testing direct connection to MongoDB with URI: mongodb+srv://magaly:***@cluster0.ientrf8.mongodb.net/fitness_tracker");
 
-            // Test MongoDB connection
-            String dbName = mongoTemplate.getDb().getName();
-            logger.info("Successfully connected to MongoDB database: {}", dbName);
+            try (MongoClient client = MongoClients.create(connectionString)) {
+                logger.info("MongoDB connection successful!");
+                logger.info("Available databases:");
+                client.listDatabaseNames().forEach(name -> logger.info(" - {}", name));
+            } catch (Exception e) {
+                logger.error("MongoDB connection test failed: {}", e.getMessage());
+            }
 
-            // Write a test document to verify write permissions
-            Map<String, Object> testDoc = new HashMap<>();
-            testDoc.put("applicationStartup", true);
-            testDoc.put("timestamp", System.currentTimeMillis());
-            testDoc.put("profiles", Arrays.toString(activeProfiles));
-
-            mongoTemplate.save(testDoc, "application_startup");
-            logger.info("Successfully wrote test document to MongoDB");
-
-        } catch (Exception e) {
-            logger.error("Failed to connect to MongoDB: {}", e.getMessage(), e);
-        }
+            logger.info("=====================================================");
+        };
     }
 }

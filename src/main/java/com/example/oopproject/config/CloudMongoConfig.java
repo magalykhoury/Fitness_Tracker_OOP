@@ -19,7 +19,7 @@ public class CloudMongoConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(CloudMongoConfig.class);
 
-    @Value("${MONGODB_URI:mongodb+srv://khourymagaly:JoemagalyJoe@cluster0.ientrf8.mongodb.net/fitness_tracker?retryWrites=true&w=majority}")
+    @Value("${MONGODB_URI:mongodb+srv://magaly:mohamad@cluster0.ientrf8.mongodb.net/fitness_tracker?retryWrites=true&w=majority}")
     private String mongoUri;
 
     @Bean
