@@ -1,4 +1,4 @@
-package com.example.oopproject.controller;
+package com.example.oopproject.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
