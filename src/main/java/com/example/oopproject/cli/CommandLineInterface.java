@@ -44,7 +44,7 @@ public class CommandLineInterface implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Hello");
+
         boolean exit = false;
 
         while (!exit) {
@@ -155,13 +155,15 @@ public class CommandLineInterface implements CommandLineRunner {
             System.out.println("\n===== ADMIN MENU =====");
             System.out.println("1. View All Workouts");
             System.out.println("2. Add New Workout");
-            System.out.println("3. Delete Workout");
-            System.out.println("4. Add New Exercise");
-            System.out.println("5. Delete Exercise");
-            System.out.println("6. Logout");
+            System.out.println("3. Update Workout"); // New option
+            System.out.println("4. Delete Workout");
+            System.out.println("5. Add New Exercise");
+            System.out.println("6. Update Exercise"); // New option
+            System.out.println("7. Delete Exercise");
+            System.out.println("8. Logout");
             System.out.print("Enter your choice: ");
 
-            int choice = getUserChoice(6);
+            int choice = getUserChoice(8);
             switch (choice) {
                 case 1:
                     browseWorkouts();
@@ -170,17 +172,23 @@ public class CommandLineInterface implements CommandLineRunner {
                     addWorkout();
                     break;
                 case 3:
-                    deleteWorkout();
+                    updateWorkout(); // Call the update method
                     break;
                 case 4:
-                    addExercise();
+                    deleteWorkout();
                     break;
                 case 5:
-                    deleteExercise();
+                    addExercise();
                     break;
                 case 6:
+                    updateExercise(); // Call the update method
+                    break;
+                case 7:
+                    deleteExercise();
+                    break;
+                case 8:
                     System.out.println("Logging out.");
-                    currentUser = null;
+                    currentUser  = null;
                     back = true;
                     break;
                 default:
@@ -224,6 +232,50 @@ public class CommandLineInterface implements CommandLineRunner {
             System.out.println("Failed to delete workout: " + e.getMessage());
         }
     }
+    private void updateWorkout() {
+        System.out.print("\nEnter workout ID to update: ");
+        String id = scanner.nextLine();
+        try {
+            Workout existingWorkout = workoutService.getWorkoutById(id); // Implement this method to retrieve the workout
+            if (existingWorkout != null) {
+                System.out.print("Enter new workout type (current: " + existingWorkout.getWorkoutType() + "): ");
+                String workoutType = scanner.nextLine();
+                if (!workoutType.isEmpty()) {
+                    existingWorkout.setWorkoutType(workoutType);
+                }
+
+                System.out.print("Enter new duration (minutes) (current: " + existingWorkout.getDuration() + "): ");
+                String durationInput = scanner.nextLine();
+                if (!durationInput.isEmpty()) {
+                    existingWorkout.setDuration(Integer.parseInt(durationInput));
+                }
+
+                System.out.print("Enter new calories burned (current: " + existingWorkout.getCaloriesBurned() + "): ");
+                String caloriesInput = scanner.nextLine();
+                if (!caloriesInput.isEmpty()) {
+                    existingWorkout.setCaloriesBurned(Integer.parseInt(caloriesInput));
+                }
+
+                System.out.print("Enter new date (yyyy-MM-dd) (current: " + dateFormat.format(existingWorkout.getDate()) + "): ");
+                String dateInput = scanner.nextLine();
+                if (!dateInput.isEmpty()) {
+                    try {
+                        Date newDate = dateFormat.parse(dateInput);
+                        existingWorkout.setDate(newDate);
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date format. Keeping the current date.");
+                    }
+                }
+
+                workoutService.updateWorkout(id, existingWorkout); // Call the update method in the service
+                System.out.println("Workout updated successfully.");
+            } else {
+                System.out.println("Workout not found.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error updating workout: " + e.getMessage());
+        }
+    }
 
     private void addExercise() {
         System.out.println("\n===== ADD NEW EXERCISE =====");
@@ -243,6 +295,45 @@ public class CommandLineInterface implements CommandLineRunner {
 
         exerciseService.createExercise(exercise);
         System.out.println("Exercise added successfully.");
+    }
+    private void updateExercise() {
+        System.out.print("\nEnter exercise ID to update: ");
+        String id = scanner.nextLine();
+        try {
+            Exercise existingExercise = exerciseService.getExerciseById(id); // Implement this method to retrieve the exercise
+            if (existingExercise != null) {
+                System.out.print("Enter new exercise name (current: " + existingExercise.getName() + "): ");
+                String name = scanner.nextLine();
+                if (!name.isEmpty()) {
+                    existingExercise.setName(name);
+                }
+
+                System.out.print("Enter new sets (current: " + existingExercise.getSets() + "): ");
+                String setsInput = scanner.nextLine();
+                if (!setsInput.isEmpty()) {
+                    existingExercise.setSets(Integer.parseInt(setsInput));
+                }
+
+                System.out.print("Enter new reps (current: " + existingExercise.getReps() + "): ");
+                String repsInput = scanner.nextLine();
+                if (!repsInput.isEmpty()) {
+                    existingExercise.setReps(Integer.parseInt(repsInput));
+                }
+
+                System.out.print("Enter new weight (kg) (current: " + existingExercise.getWeight() + "): ");
+                String weightInput = scanner.nextLine();
+                if (!weightInput.isEmpty()) {
+                    existingExercise.setWeight(Double.parseDouble(weightInput));
+                }
+
+                exerciseService.updateExercise(id, existingExercise); // Call the update method in the service
+                System.out.println("Exercise updated successfully.");
+            } else {
+                System.out.println("Exercise not found.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error updating exercise: " + e.getMessage());
+        }
     }
 
     private void deleteExercise() {

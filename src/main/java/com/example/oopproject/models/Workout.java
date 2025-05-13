@@ -2,12 +2,13 @@ package com.example.oopproject.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.bson.types.ObjectId;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +16,10 @@ import java.util.List;
 public class Workout {
 
     @Id
-    private String id;
+    private ObjectId id;  // Changed from String to ObjectId
+
     private String name;
+
     @NotBlank(message = "User ID is required")
     private String userId;
 
@@ -46,14 +49,24 @@ public class Workout {
         this.caloriesBurned = caloriesBurned;
         this.exercises = exercises;
     }
+    //lal testing
+    public Workout(String name, int duration) {
+        this.name = name;
+        this.duration = duration;
+    }
 
     // Getters and Setters
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    // Convenience method to get ID as String
+    public String getIdAsString() {
+        return id != null ? id.toString() : null;
     }
 
     public String getName() {
@@ -63,6 +76,7 @@ public class Workout {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getUserId() {
         return userId;
     }
@@ -110,10 +124,11 @@ public class Workout {
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
+
     @Override
     public String toString() {
         return "Workout{" +
-                "id='" + id + '\'' +
+                "id='" + (id != null ? id.toString() : null) + '\'' +
                 ", userId='" + userId + '\'' +
                 ", date=" + date +
                 ", duration=" + duration +

@@ -22,6 +22,8 @@ public class WorkoutController {
     // CREATE
     @PostMapping
     public Workout createWorkout(@RequestBody Workout workout) {
+        // Let MongoDB generate the ObjectId automatically
+        // No need to manually set the ID as MongoDB will handle it
         return workoutRepository.save(workout);
     }
 

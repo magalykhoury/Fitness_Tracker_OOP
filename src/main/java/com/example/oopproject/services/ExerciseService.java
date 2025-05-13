@@ -47,4 +47,8 @@ public class ExerciseService {
             exerciseRepository.deleteById(id);
         }
     }
+
+    public Exercise getExerciseById(String id) {
+        return exerciseRepository.findById(id).orElse(null);
+    }
 }

@@ -13,4 +13,5 @@ public interface WorkoutRepository extends MongoRepository<Workout, String> {
     List<Workout> findByWorkoutType(String workoutType);
     List<Workout> findByDateBetween(Date startDate, Date endDate);
     List<Workout> findByUserIdAndWorkoutType(String userId, String workoutType);
-}
+    List<Workout> findTopByOrderByIdDesc();
+    }
