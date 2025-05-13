@@ -19,10 +19,9 @@ public class Exercise {
     private String equipment;
     private int difficultyLevel;
     private List<String> muscleGroups;
-    public Exercise() {
-    }
 
-    public Exercise(String name, int reps, int sets, String workoutId, double weight, String equipment) {
+
+    public Exercise(String name, int reps, int sets, String workoutId) {
         this.name = name;
         this.reps = reps;
         this.sets = sets;
@@ -30,6 +29,14 @@ public class Exercise {
         this.weight = weight;
         this.equipment = equipment;
     }
+    public Exercise(String id, String name, int reps, int sets, String workoutId) {
+        this.id = id;
+        this.name = name;
+        this.reps = reps;
+        this.sets = sets;
+        this.workoutId = workoutId;
+    }
+
 
     public String getId() {
         return id;

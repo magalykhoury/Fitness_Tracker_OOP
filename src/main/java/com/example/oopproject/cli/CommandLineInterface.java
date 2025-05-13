@@ -279,7 +279,7 @@ public class CommandLineInterface implements CommandLineRunner {
 
     private void addExercise() {
         System.out.println("\n===== ADD NEW EXERCISE =====");
-        Exercise exercise = new Exercise();
+        Exercise exercise = new Exercise("Push Ups", 10, 3, "workout123");
 
         System.out.print("Enter exercise name: ");
         exercise.setName(scanner.nextLine());
