@@ -1,0 +1,10 @@
+com.example.oopproject
+com.example.oopproject.cli
+com.example.oopproject.config
+com.example.oopproject.controllers
+com.example.oopproject.dto
+com.example.oopproject.exceptions
+com.example.oopproject.models
+com.example.oopproject.repositories
+com.example.oopproject.services
+com.example.oopproject.util

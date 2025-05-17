@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.7'
-
 }
 
 group = 'com.example'
@@ -12,7 +11,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
-
 
 configurations {
     compileOnly {
@@ -29,35 +27,48 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.security:spring-security-web'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-    // JWT and Security dependencies
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    runtimeOnly   'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly   'io.jsonwebtoken:jjwt-jackson:0.11.5'
     implementation 'org.springframework.shell:spring-shell-starter:3.1.5'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    compileOnly        'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly     'org.springframework.boot:spring-boot-devtools'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // Mockito (Mocking framework for unit testing)
-    testImplementation 'org.mockito:mockito-core:4.0.0'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     testImplementation 'org.mockito:mockito-core:5.2.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.2.0'
-
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testRuntimeOnly    'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
-javadoc {
-    exclude '**/generated/**'
+
+// configure Javadoc generation
+tasks.named('javadoc', Javadoc) {
+    exclude '/generated/'
     options.addStringOption('Xdoclint:none', '-quiet')
     failOnError = false
+    // after generating javadoc, copy it into static resources
+    finalizedBy 'copyJavadocToStatic'
+}
+
+// a Copy task that moves the generated docs into src/main/resources/static/apidocs
+tasks.register('copyJavadocToStatic', Copy) {
+    dependsOn tasks.named('javadoc')
+    from("$buildDir/docs/javadoc")
+    into("$projectDir/src/main/resources/static/apidocs")
+}
+
+// ensure that when we build the fat jar, the docs are already in place
+tasks.named('bootJar') {
+    dependsOn 'copyJavadocToStatic'
 }
