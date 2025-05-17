@@ -12,15 +12,28 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+/**
+ * Configuration class for MongoDB client and template setup in production and cloud environments.
+ *
+ * <p>Uses the MongoDB URI provided via environment variables or configuration properties.</p>
+ */
 @Configuration
 @Profile({"prod", "cloud"})
 public class ProdMongoConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(ProdMongoConfig.class);
 
+    /**
+     * MongoDB connection URI injected from environment or application properties.
+     */
     @Value("${MONGODB_URI}")
     private String mongoUri;
 
+    /**
+     * Creates a MongoClient bean configured for production environment using MongoDB Atlas.
+     *
+     * @return a MongoClient instance configured with the provided MongoDB URI
+     */
     @Bean
     public MongoClient mongoClient() {
         logger.info("Initializing MongoDB client for production environment...");
@@ -42,6 +55,12 @@ public class ProdMongoConfig {
         return MongoClients.create(mongoClientSettings);
     }
 
+    /**
+     * Creates a MongoTemplate bean to interact with the MongoDB database.
+     *
+     * @return a MongoTemplate instance for the configured database
+     * @throws Exception if creating the MongoTemplate fails
+     */
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
         logger.info("Creating MongoTemplate for production environment...");

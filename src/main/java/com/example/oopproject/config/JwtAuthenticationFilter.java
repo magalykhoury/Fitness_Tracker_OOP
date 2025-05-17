@@ -21,16 +21,39 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Filter for authenticating requests using JWT (JSON Web Token).
+ *
+ * <p>This filter extracts the JWT token from the Authorization header,
+ * validates it, extracts user information and roles, and sets the
+ * authentication in the Spring Security context.</p>
+ *
+ * <p>If the token is invalid or missing, the filter does not authenticate the user.</p>
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final String jwtSecret;
 
-    // Constructor injection instead of @Value
+    /**
+     * Constructs the filter with the JWT secret key.
+     *
+     * @param jwtSecret the secret key used to sign and verify JWT tokens
+     */
     public JwtAuthenticationFilter(@Value("${jwt.secret:defaultSecretKey123!@#}") String jwtSecret) {
         this.jwtSecret = jwtSecret;
     }
 
+    /**
+     * Performs the filtering logic to extract and validate the JWT token,
+     * then sets the Spring Security authentication if valid.
+     *
+     * @param request the incoming HTTP request
+     * @param response the HTTP response
+     * @param filterChain the filter chain to proceed with processing
+     * @throws ServletException if servlet errors occur
+     * @throws IOException if I/O errors occur
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,

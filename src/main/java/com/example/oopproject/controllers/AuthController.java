@@ -15,6 +15,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * REST controller for authentication operations.
+ * Handles login requests and JWT token generation for admin users.
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -22,6 +26,14 @@ public class AuthController {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    /**
+     * Authenticates a user and returns a JWT token if successful.
+     * Currently supports a fixed admin username and password.
+     *
+     * @param loginRequest The login credentials (username and password).
+     * @return A ResponseEntity containing the JWT token if authentication is successful,
+     *         or HTTP 401 Unauthorized otherwise.
+     */
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
         // Note the change from "admin 123" to "admin123"
@@ -35,6 +47,13 @@ public class AuthController {
         return ResponseEntity.status(401).build();
     }
 
+    /**
+     * Generates a JWT token for the authenticated user with a 24-hour expiration.
+     * The token includes the username as the subject and assigns the ROLE_ADMIN role.
+     *
+     * @param username The username to include in the token.
+     * @return A signed JWT token string.
+     */
     private String generateToken(String username) {
         SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
 
@@ -47,7 +66,9 @@ public class AuthController {
                 .compact();
     }
 
-    // Inner class for login request
+    /**
+     * Inner class representing the login request payload.
+     */
     private static class LoginRequest {
         private String username;
         private String password;

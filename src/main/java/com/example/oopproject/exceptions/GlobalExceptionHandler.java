@@ -1,6 +1,5 @@
 package com.example.oopproject.exceptions;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,9 +12,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Global exception handler for the application.
+ * Handles specific and general exceptions and returns appropriate HTTP responses.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Handles ResourceNotFoundException.
+     *
+     * @param ex      the exception thrown
+     * @param request the current web request
+     * @return ResponseEntity with error details and NOT_FOUND status
+     */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> resourceNotFoundException(
             ResourceNotFoundException ex, WebRequest request) {
@@ -28,6 +38,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Handles BadRequestException.
+     *
+     * @param ex      the exception thrown
+     * @param request the current web request
+     * @return ResponseEntity with error details and BAD_REQUEST status
+     */
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<?> badRequestException(
             BadRequestException ex, WebRequest request) {
@@ -40,6 +57,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handles generic exceptions.
+     *
+     * @param ex      the exception thrown
+     * @param request the current web request
+     * @return ResponseEntity with error details and INTERNAL_SERVER_ERROR status
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> globalExceptionHandler(
             Exception ex, WebRequest request) {
@@ -52,6 +76,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Handles validation errors from @Valid annotations.
+     *
+     * @param ex the MethodArgumentNotValidException
+     * @return ResponseEntity with validation error details and BAD_REQUEST status
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(
             MethodArgumentNotValidException ex) {

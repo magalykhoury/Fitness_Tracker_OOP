@@ -13,6 +13,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * REST controller providing diagnostics endpoints.
+ * Includes health checks and environment info for MongoDB and the application.
+ */
 @RestController
 @RequestMapping("/api/diagnostics")
 public class DiagnosticsController {
@@ -23,6 +27,12 @@ public class DiagnosticsController {
     @Autowired
     private Environment environment;
 
+    /**
+     * Endpoint to test MongoDB connection and basic operations.
+     * Returns connection status, database name, collections, and attempts a test document write.
+     *
+     * @return ResponseEntity with connection diagnostics and test write result or error information.
+     */
     @GetMapping("/mongodb-test")
     public ResponseEntity<Map<String, Object>> testMongoDbConnection() {
         Map<String, Object> result = new HashMap<>();
@@ -52,6 +62,12 @@ public class DiagnosticsController {
         }
     }
 
+    /**
+     * Endpoint to retrieve environment information.
+     * Returns active Spring profiles, Java version, OS name, and MongoDB URI (masked for security).
+     *
+     * @return ResponseEntity with environment and configuration details.
+     */
     @GetMapping("/env-info")
     public ResponseEntity<Map<String, Object>> getEnvironmentInfo() {
         Map<String, Object> info = new HashMap<>();

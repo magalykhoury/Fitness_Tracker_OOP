@@ -11,12 +11,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+/**
+ * Configuration class for MongoDB connection in the development environment.
+ *
+ * <p>This configuration is active when the "dev" Spring profile is enabled.</p>
+ *
+ * <p>Connects to a local MongoDB instance running at mongodb://localhost:27017.</p>
+ */
 @Configuration
 @Profile("dev")
 public class DevMongoConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(DevMongoConfig.class);
 
+    /**
+     * Creates and returns a {@link MongoClient} configured to connect to
+     * the local MongoDB server.
+     *
+     * @return {@link MongoClient} instance for development MongoDB access
+     */
     @Bean
     public MongoClient mongoClient() {
         logger.info("Initializing MongoDB client for development environment...");
@@ -30,6 +43,13 @@ public class DevMongoConfig {
         return MongoClients.create(mongoClientSettings);
     }
 
+    /**
+     * Creates and returns a {@link MongoTemplate} to interact with the
+     * "fitness_tracker" database on the local MongoDB server.
+     *
+     * @return {@link MongoTemplate} instance for database operations
+     * @throws Exception if there is an error creating the template
+     */
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
         logger.info("Creating MongoTemplate for development environment...");

@@ -51,10 +51,13 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:5.2.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.2.0'
 
-
-
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+javadoc {
+    exclude '**/generated/**'
+    options.addStringOption('Xdoclint:none', '-quiet')
+    failOnError = false
 }

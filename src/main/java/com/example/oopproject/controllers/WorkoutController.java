@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * REST Controller for managing Workout entities.
+ */
 @RestController
 @RequestMapping("/api/workouts")
 public class WorkoutController {
@@ -19,48 +22,54 @@ public class WorkoutController {
     @Autowired
     private WorkoutRepository workoutRepository;
 
-    // CREATE
+    /**
+     * Create a new workout.
+     */
     @PostMapping
-    public Workout createWorkout(@RequestBody Workout workout) {
-        // Let MongoDB generate the ObjectId automatically
-        // No need to manually set the ID as MongoDB will handle it
-        return workoutRepository.save(workout);
+    public ResponseEntity<Workout> createWorkout(@RequestBody Workout workout) {
+        Workout savedWorkout = workoutRepository.save(workout);
+        return new ResponseEntity<>(savedWorkout, HttpStatus.CREATED);
     }
 
-    // READ ALL
+    /**
+     * Get all workouts.
+     */
     @GetMapping
-    public List<Workout> getAllWorkouts() {
-        return workoutRepository.findAll();
+    public ResponseEntity<List<Workout>> getAllWorkouts() {
+        return ResponseEntity.ok(workoutRepository.findAll());
     }
 
-    // READ BY ID
+    /**
+     * Get a workout by its ID.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Workout> getWorkoutById(@PathVariable String id) {
-        try {
-            Workout workout = workoutRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Workout not found with id: " + id));
-            return ResponseEntity.ok(workout);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return workoutRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // UPDATE
+    /**
+     * Update a workout by ID.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Workout> updateWorkout(@PathVariable String id, @RequestBody Workout updatedWorkout) {
-        try {
-            Workout workout = workoutRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Workout not found with id: " + id));
-
-            workout.setName(updatedWorkout.getName());
-            workout.setDate(updatedWorkout.getDate());
-            return ResponseEntity.ok(workoutRepository.save(workout));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return workoutRepository.findById(id)
+                .map(existingWorkout -> {
+                    existingWorkout.setName(updatedWorkout.getName());
+                    existingWorkout.setDate(updatedWorkout.getDate());
+                    existingWorkout.setDuration(updatedWorkout.getDuration());
+                    existingWorkout.setCaloriesBurned(updatedWorkout.getCaloriesBurned());
+                    existingWorkout.setWorkoutType(updatedWorkout.getWorkoutType());
+                    Workout saved = workoutRepository.save(existingWorkout);
+                    return ResponseEntity.ok(saved);
+                })
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // DELETE
+    /**
+     * Delete a workout by ID.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWorkout(@PathVariable String id) {
         if (workoutRepository.existsById(id)) {
@@ -71,7 +80,9 @@ public class WorkoutController {
         }
     }
 
-    // PAGINATED & SORTED ENDPOINT
+    /**
+     * Get paginated and sorted workouts.
+     */
     @GetMapping("/paginated")
     public ResponseEntity<List<Workout>> getPaginatedWorkouts(
             @RequestParam(defaultValue = "0") int page,
@@ -85,11 +96,14 @@ public class WorkoutController {
         return ResponseEntity.ok(workoutPage.getContent());
     }
 
-    // FILTER BY DATE RANGE
+    /**
+     * Filter workouts by a date range.
+     */
     @GetMapping("/filterByDate")
     public ResponseEntity<List<Workout>> filterByDateRange(
             @RequestParam String startDate,
             @RequestParam String endDate) {
+
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date start = formatter.parse(startDate);
@@ -101,18 +115,18 @@ public class WorkoutController {
         }
     }
 
-    // SEARCH BY WORKOUT TYPE (OPTIONAL USER ID)
+    /**
+     * Search workouts by workout type (and optional userId).
+     */
     @GetMapping("/search")
     public ResponseEntity<List<Workout>> searchWorkouts(
             @RequestParam String workoutType,
             @RequestParam(required = false) String userId) {
 
-        List<Workout> results;
-        if (userId != null && !userId.isEmpty()) {
-            results = workoutRepository.findByUserIdAndWorkoutType(userId, workoutType);
-        } else {
-            results = workoutRepository.findByWorkoutType(workoutType);
-        }
+        List<Workout> results = (userId != null && !userId.isEmpty())
+                ? workoutRepository.findByUserIdAndWorkoutType(userId, workoutType)
+                : workoutRepository.findByWorkoutType(workoutType);
+
         return ResponseEntity.ok(results);
     }
 }

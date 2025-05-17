@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST controller for managing Exercise entities.
+ * Provides endpoints to create, read, update, delete, paginate, sort, and filter exercises.
+ */
 @RestController
 @RequestMapping("/exercises")
 public class ExerciseController {
@@ -22,19 +26,36 @@ public class ExerciseController {
     @Autowired
     private ExerciseRepository exerciseRepository;
 
-    // CREATE
+    /**
+     * Create a new exercise.
+     *
+     * @param exercise Exercise object to create
+     * @return Created Exercise
+     */
     @PostMapping
     public Exercise createExercise(@RequestBody Exercise exercise) {
         return exerciseRepository.save(exercise);
     }
 
-    // READ ALL
+    /**
+     * Retrieve all exercises.
+     *
+     * @return List of all Exercise objects
+     */
     @GetMapping
     public List<Exercise> getAllExercises() {
         return exerciseRepository.findAll();
     }
 
-    // READ PAGINATED + SORTED
+    /**
+     * Retrieve paginated and sorted exercises.
+     *
+     * @param page      Page number (0-based)
+     * @param size      Page size
+     * @param sortBy    Field to sort by
+     * @param direction Sort direction ("asc" or "desc")
+     * @return Page of Exercise objects
+     */
     @GetMapping("/paginated")
     public Page<Exercise> getExercisesPaginated(
             @RequestParam(defaultValue = "0") int page,
@@ -47,7 +68,12 @@ public class ExerciseController {
         return exerciseRepository.findAll(pageable);
     }
 
-    // READ BY ID
+    /**
+     * Retrieve an exercise by its ID.
+     *
+     * @param id Exercise ID
+     * @return ResponseEntity containing Exercise if found, or 404 Not Found
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Exercise> getExerciseById(@PathVariable String id) {
         Optional<Exercise> exercise = exerciseRepository.findById(id);
@@ -55,7 +81,13 @@ public class ExerciseController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // UPDATE
+    /**
+     * Update an existing exercise by ID, or create it if not present.
+     *
+     * @param id              Exercise ID
+     * @param updatedExercise  Exercise object with updated data
+     * @return Updated or newly created Exercise
+     */
     @PutMapping("/{id}")
     public Exercise updateExercise(@PathVariable String id, @RequestBody Exercise updatedExercise) {
         return exerciseRepository.findById(id)
@@ -72,7 +104,12 @@ public class ExerciseController {
                 });
     }
 
-    // DELETE
+    /**
+     * Delete an exercise by its ID.
+     *
+     * @param id Exercise ID
+     * @return ResponseEntity with status NO_CONTENT if deleted, or NOT_FOUND if not present
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExercise(@PathVariable String id) {
         if (exerciseRepository.existsById(id)) {
@@ -83,7 +120,15 @@ public class ExerciseController {
         }
     }
 
-    // FILTERED AND SEARCHED RESULTS
+    /**
+     * Retrieve exercises filtered by optional criteria: reps, sets, name, and workoutId.
+     *
+     * @param reps      Optional filter for number of repetitions
+     * @param sets      Optional filter for number of sets
+     * @param name      Optional filter for exercise name (partial, case-insensitive)
+     * @param workoutId Optional filter for associated workout ID
+     * @return ResponseEntity containing list of filtered exercises
+     */
     @GetMapping("/filter")
     public ResponseEntity<List<Exercise>> getExercisesByFilter(
             @RequestParam(required = false) Integer reps,

@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/**
+ * Service to load user-specific data for authentication.
+ * Implements Spring Security's UserDetailsService to retrieve user details by username.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

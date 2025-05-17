@@ -7,9 +7,19 @@ import io.swagger.v3.oas.models.info.License;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration class for setting up the OpenAPI (Swagger) documentation.
+ *
+ * <p>Defines the API metadata such as title, description, version, contact information, and license.</p>
+ */
 @Configuration
 public class OpenAPIConfig {
 
+    /**
+     * Creates and configures the OpenAPI bean with custom API information.
+     *
+     * @return an OpenAPI object containing metadata for the Exercise API
+     */
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
