@@ -14,7 +14,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 /**
- * Security configuration class that sets up HTTP security, CORS, session management, and JWT authentication filter.
+ * Security configuration class that sets up HTTP security, CORS, session management,
+ * and JWT authentication filter.
+ *
+ * @since 1.0
  */
 @Configuration
 @EnableWebSecurity
@@ -25,7 +28,8 @@ public class SecurityConfig {
     /**
      * Constructor for SecurityConfig.
      *
-     * @param jwtAuthenticationFilter the JWT authentication filter to apply before username-password filter
+     * @param jwtAuthenticationFilter the JWT authentication filter to apply before the
+     *                                UsernamePasswordAuthenticationFilter
      */
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -34,8 +38,9 @@ public class SecurityConfig {
     /**
      * Configures the security filter chain.
      *
-     * <p>Disables CSRF, configures CORS, sets session management to stateless, and configures route authorization rules.
-     * Adds JWT authentication filter before the UsernamePasswordAuthenticationFilter.</p>
+     * <p>Disables CSRF, configures CORS, sets session management to stateless,
+     * and configures route authorization rules. Adds JWT authentication filter
+     * before the UsernamePasswordAuthenticationFilter.</p>
      *
      * @param http the HttpSecurity to configure
      * @return the configured SecurityFilterChain
@@ -44,14 +49,42 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // we’re a pure REST API + static UI, no classic CSRF forms
                 .csrf(csrf -> csrf.disable())
+                // apply CORS to all endpoints
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/api-docs/**").permitAll()
-                        .requestMatchers("/auth/**", "/api/auth/**").permitAll()
-                        .requestMatchers("/api/users/**").permitAll()
-                        .anyRequest().authenticated())
+                // JWT stateless sessions only
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                // authorization rules
+                .authorizeHttpRequests(authorize -> authorize
+                        // --- PUBLIC UI & STATIC ASSETS ---
+                        .requestMatchers(
+                                "/",                     // root (redirect to index.html)
+                                "/*/.html",            // any HTML page in /static
+                                "/css/**",               // CSS
+                                "/js/**",                // JS
+                                "/favicon.ico"
+                        ).permitAll()
+
+                        // --- JAVADOC SITE ---
+                        .requestMatchers("/apidocs/**").permitAll()
+
+                        // --- SWAGGER / OPENAPI UI ---
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+
+                        // --- AUTH ENDPOINTS ---
+                        .requestMatchers("/auth/*", "/api/auth/*").permitAll()
+
+                        // everything else requires a valid JWT
+                        .anyRequest().authenticated()
+                )
+                // hook in your JWT filter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -60,8 +93,8 @@ public class SecurityConfig {
     /**
      * Configures the CORS settings for the application.
      *
-     * <p>Allows all origins, HTTP methods GET, POST, PUT, PATCH, DELETE, OPTIONS, and all headers.
-     * Exposes the "Authorization" header to clients.</p>
+     * <p>Allows all origins, HTTP methods GET, POST, PUT, PATCH, DELETE, OPTIONS,
+     * and all headers. Exposes the "Authorization" header to clients.</p>
      *
      * @return the CorsConfigurationSource for CORS configuration
      */
@@ -69,10 +102,14 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(
+                Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+        );
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // apply this CORS policy to all endpoints
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
