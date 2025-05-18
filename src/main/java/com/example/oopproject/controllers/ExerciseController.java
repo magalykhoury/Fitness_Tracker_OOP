@@ -96,6 +96,10 @@ public class ExerciseController {
                     exercise.setReps(updatedExercise.getReps());
                     exercise.setSets(updatedExercise.getSets());
                     exercise.setWorkoutId(updatedExercise.getWorkoutId());
+                    // Added from first code: weight, equipment, muscleGroups
+                    exercise.setWeight(updatedExercise.getWeight());
+                    exercise.setEquipment(updatedExercise.getEquipment());
+                    exercise.setMuscleGroups(updatedExercise.getMuscleGroups());
                     return exerciseRepository.save(exercise);
                 })
                 .orElseGet(() -> {
@@ -147,3 +151,4 @@ public class ExerciseController {
         return new ResponseEntity<>(filtered, HttpStatus.OK);
     }
 }
+

@@ -1,11 +1,10 @@
 /**
- * This package contains classes and interfaces related to
- * [brief description of what this package is about].
- *
- * <p>Include any details here like the purpose of the package,
- * how classes interact, or usage notes.</p>
+ * This package provides the command-line interface (CLI) for the OOP project,
+ * enabling user interaction through text-based commands and facilitating access
+ * to the application's functionalities.
  *
  * @author Your Name
  * @version 1.0
  */
+
 package com.example.oopproject.cli;

@@ -44,4 +44,63 @@ public interface ExerciseRepository extends MongoRepository<Exercise, String> {
      * @return a list of exercises matching the difficulty level
      */
     List<Exercise> findByDifficultyLevel(int difficultyLevel);
+
+    /**
+     * Finds exercises by name (case-insensitive containing match).
+     *
+     * @param name the name to search for
+     * @return a list of exercises with names containing the specified string
+     */
+    List<Exercise> findByNameContainingIgnoreCase(String name);
+
+    /**
+     * Finds exercises by the number of repetitions.
+     *
+     * @param reps the number of repetitions to search for
+     * @return a list of exercises with the specified number of repetitions
+     */
+    List<Exercise> findByReps(int reps);
+
+    /**
+     * Finds exercises by the number of sets.
+     *
+     * @param sets the number of sets to search for
+     * @return a list of exercises with the specified number of sets
+     */
+    List<Exercise> findBySets(int sets);
+
+    /**
+     * Finds exercises associated with a specific workout.
+     *
+     * @param workoutId the ID of the workout to search for
+     * @return a list of exercises associated with the specified workout
+     */
+    List<Exercise> findByWorkoutId(String workoutId);
+
+    /**
+     * Finds exercises by name and repetitions.
+     *
+     * @param name the name to search for
+     * @param reps the number of repetitions to search for
+     * @return a list of exercises matching both criteria
+     */
+    List<Exercise> findByNameContainingIgnoreCaseAndReps(String name, int reps);
+
+    /**
+     * Finds exercises by name and sets.
+     *
+     * @param name the name to search for
+     * @param sets the number of sets to search for
+     * @return a list of exercises matching both criteria
+     */
+    List<Exercise> findByNameContainingIgnoreCaseAndSets(String name, int sets);
+
+    /**
+     * Finds exercises by repetitions and sets.
+     *
+     * @param reps the number of repetitions to search for
+     * @param sets the number of sets to search for
+     * @return a list of exercises matching both criteria
+     */
+    List<Exercise> findByRepsAndSets(int reps, int sets);
 }

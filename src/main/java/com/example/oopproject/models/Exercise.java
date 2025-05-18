@@ -3,6 +3,7 @@ package com.example.oopproject.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,8 +37,9 @@ public class Exercise {
         this.reps = reps;
         this.sets = sets;
         this.workoutId = workoutId;
-        this.weight = weight;
-        this.equipment = equipment;
+        this.weight = 0.0;
+        this.equipment = "";
+        this.muscleGroups = new ArrayList<>();
     }
 
     /**
@@ -55,6 +57,18 @@ public class Exercise {
         this.reps = reps;
         this.sets = sets;
         this.workoutId = workoutId;
+        this.muscleGroups = new ArrayList<>();
+        this.weight = 0.0;
+        this.equipment = "";
+    }
+
+    /**
+     * Default no-argument constructor.
+     */
+    public Exercise() {
+        this.muscleGroups = new ArrayList<>();
+        this.weight = 0.0;
+        this.equipment = "";
     }
 
     /**
@@ -201,3 +215,4 @@ public class Exercise {
         this.muscleGroups = muscleGroups;
     }
 }
+

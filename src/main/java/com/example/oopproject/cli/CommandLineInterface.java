@@ -9,6 +9,7 @@ import com.example.oopproject.services.UserService;
 import com.example.oopproject.services.WorkoutService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ import java.util.Scanner;
 
 @Component
 @ConditionalOnProperty(name = "org.example.oopproject1.cli.enabled", havingValue = "true", matchIfMissing = true)
+@Profile("!test")
 public class CommandLineInterface implements CommandLineRunner {
 
     private final UserService userService;

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -60,6 +61,10 @@ public class ExerciseService {
                     exercise.setReps(updatedExercise.getReps());
                     exercise.setSets(updatedExercise.getSets());
                     exercise.setWorkoutId(updatedExercise.getWorkoutId());
+                    // Added from first code: weight, equipment, muscleGroups
+                    exercise.setWeight(updatedExercise.getWeight());
+                    exercise.setEquipment(updatedExercise.getEquipment());
+                    exercise.setMuscleGroups(updatedExercise.getMuscleGroups());
                     return exerciseRepository.save(exercise);
                 })
                 .orElseGet(() -> {
@@ -124,3 +129,4 @@ public class ExerciseService {
                 .collect(Collectors.toList());
     }
 }
+
