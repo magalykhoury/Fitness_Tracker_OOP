@@ -67,6 +67,13 @@ loadScripts(document, 'script');</script>
 <li><a href="#findByMuscleGroupsContaining(java.lang.String)" tabindex="0">findByMuscleGroupsContaining(String)</a></li>
 <li><a href="#findByEquipment(java.lang.String)" tabindex="0">findByEquipment(String)</a></li>
 <li><a href="#findByDifficultyLevel(int)" tabindex="0">findByDifficultyLevel(int)</a></li>
+<li><a href="#findByNameContainingIgnoreCase(java.lang.String)" tabindex="0">findByNameContainingIgnoreCase(String)</a></li>
+<li><a href="#findByReps(int)" tabindex="0">findByReps(int)</a></li>
+<li><a href="#findBySets(int)" tabindex="0">findBySets(int)</a></li>
+<li><a href="#findByWorkoutId(java.lang.String)" tabindex="0">findByWorkoutId(String)</a></li>
+<li><a href="#findByNameContainingIgnoreCaseAndReps(java.lang.String,int)" tabindex="0">findByNameContainingIgnoreCaseAndReps(String, int)</a></li>
+<li><a href="#findByNameContainingIgnoreCaseAndSets(java.lang.String,int)" tabindex="0">findByNameContainingIgnoreCaseAndSets(String, int)</a></li>
+<li><a href="#findByRepsAndSets(int,int)" tabindex="0">findByRepsAndSets(int, int)</a></li>
 </ol>
 </li>
 </ol>
@@ -122,6 +129,44 @@ extends org.springframework.data.mongodb.repository.MongoRepository&lt;<a href="
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findByName(java.lang.String)" class="member-name-link">findByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Finds exercises by their exact name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findByNameContainingIgnoreCase(java.lang.String)" class="member-name-link">findByNameContainingIgnoreCase</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Finds exercises by name (case-insensitive containing match).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findByNameContainingIgnoreCaseAndReps(java.lang.String,int)" class="member-name-link">findByNameContainingIgnoreCaseAndReps</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;reps)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Finds exercises by name and repetitions.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findByNameContainingIgnoreCaseAndSets(java.lang.String,int)" class="member-name-link">findByNameContainingIgnoreCaseAndSets</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;sets)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Finds exercises by name and sets.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findByReps(int)" class="member-name-link">findByReps</a><wbr>(int&nbsp;reps)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Finds exercises by the number of repetitions.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findByRepsAndSets(int,int)" class="member-name-link">findByRepsAndSets</a><wbr>(int&nbsp;reps,
+ int&nbsp;sets)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Finds exercises by repetitions and sets.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findBySets(int)" class="member-name-link">findBySets</a><wbr>(int&nbsp;sets)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Finds exercises by the number of sets.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findByWorkoutId(java.lang.String)" class="member-name-link">findByWorkoutId</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;workoutId)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Finds exercises associated with a specific workout.</div>
 </div>
 </div>
 </div>
@@ -211,6 +256,117 @@ extends org.springframework.data.mongodb.repository.MongoRepository&lt;<a href="
 <dd><code>difficultyLevel</code> - the difficulty level (e.g., 1 = easy, 5 = hard)</dd>
 <dt>Returns:</dt>
 <dd>a list of exercises matching the difficulty level</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="findByNameContainingIgnoreCase(java.lang.String)">
+<h3>findByNameContainingIgnoreCase</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</span>&nbsp;<span class="element-name">findByNameContainingIgnoreCase</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="block">Finds exercises by name (case-insensitive containing match).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the name to search for</dd>
+<dt>Returns:</dt>
+<dd>a list of exercises with names containing the specified string</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="findByReps(int)">
+<h3>findByReps</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</span>&nbsp;<span class="element-name">findByReps</span><wbr><span class="parameters">(int&nbsp;reps)</span></div>
+<div class="block">Finds exercises by the number of repetitions.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>reps</code> - the number of repetitions to search for</dd>
+<dt>Returns:</dt>
+<dd>a list of exercises with the specified number of repetitions</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="findBySets(int)">
+<h3>findBySets</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</span>&nbsp;<span class="element-name">findBySets</span><wbr><span class="parameters">(int&nbsp;sets)</span></div>
+<div class="block">Finds exercises by the number of sets.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sets</code> - the number of sets to search for</dd>
+<dt>Returns:</dt>
+<dd>a list of exercises with the specified number of sets</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="findByWorkoutId(java.lang.String)">
+<h3>findByWorkoutId</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</span>&nbsp;<span class="element-name">findByWorkoutId</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;workoutId)</span></div>
+<div class="block">Finds exercises associated with a specific workout.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>workoutId</code> - the ID of the workout to search for</dd>
+<dt>Returns:</dt>
+<dd>a list of exercises associated with the specified workout</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="findByNameContainingIgnoreCaseAndReps(java.lang.String,int)">
+<h3>findByNameContainingIgnoreCaseAndReps</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</span>&nbsp;<span class="element-name">findByNameContainingIgnoreCaseAndReps</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;reps)</span></div>
+<div class="block">Finds exercises by name and repetitions.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the name to search for</dd>
+<dd><code>reps</code> - the number of repetitions to search for</dd>
+<dt>Returns:</dt>
+<dd>a list of exercises matching both criteria</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="findByNameContainingIgnoreCaseAndSets(java.lang.String,int)">
+<h3>findByNameContainingIgnoreCaseAndSets</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</span>&nbsp;<span class="element-name">findByNameContainingIgnoreCaseAndSets</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;sets)</span></div>
+<div class="block">Finds exercises by name and sets.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the name to search for</dd>
+<dd><code>sets</code> - the number of sets to search for</dd>
+<dt>Returns:</dt>
+<dd>a list of exercises matching both criteria</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="findByRepsAndSets(int,int)">
+<h3>findByRepsAndSets</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../models/Exercise.html" title="class in com.example.oopproject.models">Exercise</a>&gt;</span>&nbsp;<span class="element-name">findByRepsAndSets</span><wbr><span class="parameters">(int&nbsp;reps,
+ int&nbsp;sets)</span></div>
+<div class="block">Finds exercises by repetitions and sets.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>reps</code> - the number of repetitions to search for</dd>
+<dd><code>sets</code> - the number of sets to search for</dd>
+<dt>Returns:</dt>
+<dd>a list of exercises matching both criteria</dd>
 </dl>
 </div>
 </section>

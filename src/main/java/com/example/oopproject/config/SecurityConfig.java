@@ -49,42 +49,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // we’re a pure REST API + static UI, no classic CSRF forms
-                .csrf(csrf -> csrf.disable())
-                // apply CORS to all endpoints
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                // JWT stateless sessions only
+                 .csrf(csrf -> csrf.disable())
+                  .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                // authorization rules
-                .authorizeHttpRequests(authorize -> authorize
-                        // --- PUBLIC UI & STATIC ASSETS ---
+                    .authorizeHttpRequests(authorize -> authorize
+
                         .requestMatchers(
-                                "/",                     // root (redirect to index.html)
-                                "/*/.html",            // any HTML page in /static
-                                "/css/**",               // CSS
-                                "/js/**",                // JS
+                                "/",
+                                "/*/.html",
+                                "/css/**",
+                                "/js/**",
                                 "/favicon.ico"
                         ).permitAll()
 
-                        // --- JAVADOC SITE ---
+
                         .requestMatchers("/apidocs/**").permitAll()
 
-                        // --- SWAGGER / OPENAPI UI ---
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/v3/api-docs/**"
-                        ).permitAll()
 
-                        // --- AUTH ENDPOINTS ---
                         .requestMatchers("/auth/*", "/api/auth/*").permitAll()
 
-                        // everything else requires a valid JWT
+
                         .anyRequest().authenticated()
                 )
-                // hook in your JWT filter
+
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -109,7 +98,7 @@ public class SecurityConfig {
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // apply this CORS policy to all endpoints
+
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }

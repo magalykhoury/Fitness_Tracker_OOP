@@ -33,12 +33,10 @@ public class StartupLogger {
             logger.info("-------- APPLICATION STARTUP INFO --------");
             logger.info("Active profiles: {}", Arrays.toString(environment.getActiveProfiles()));
 
-            // Safely log MongoDB URI (mask password)
-            String redactedUri = mongoDbUri.replaceAll("://[^:]+:([^@]+)@", "://*****:*****@");
+             String redactedUri = mongoDbUri.replaceAll("://[^:]+:([^@]+)@", "://*****:*****@");
             logger.info("MongoDB URI: {}", redactedUri);
 
-            // Check if we're using MongoDB Atlas by inspecting the URI
-            boolean isAtlas = mongoDbUri.contains("mongodb+srv://") ||
+             boolean isAtlas = mongoDbUri.contains("mongodb+srv://") ||
                     (mongoDbUri.contains("mongodb://") && !mongoDbUri.contains("localhost"));
 
             logger.info("Using MongoDB Atlas: {}", isAtlas);

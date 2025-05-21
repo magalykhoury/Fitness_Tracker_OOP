@@ -90,7 +90,12 @@ loadScripts(document, 'script');</script>
 @EnableWebSecurity
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">SecurityConfig</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Security configuration class that sets up HTTP security, CORS, session management, and JWT authentication filter.</div>
+<div class="block">Security configuration class that sets up HTTP security, CORS, session management,
+ and JWT authentication filter.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>1.0</dd>
+</dl>
 </div>
 </section>
 <section class="summary">
@@ -156,7 +161,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Constructor for SecurityConfig.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>jwtAuthenticationFilter</code> - the JWT authentication filter to apply before username-password filter</dd>
+<dd><code>jwtAuthenticationFilter</code> - the JWT authentication filter to apply before the
+                                UsernamePasswordAuthenticationFilter</dd>
 </dl>
 </div>
 </section>
@@ -178,8 +184,9 @@ loadScripts(document, 'script');</script>
                                                                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
 <div class="block">Configures the security filter chain.
 
- <p>Disables CSRF, configures CORS, sets session management to stateless, and configures route authorization rules.
- Adds JWT authentication filter before the UsernamePasswordAuthenticationFilter.</p></div>
+ <p>Disables CSRF, configures CORS, sets session management to stateless,
+ and configures route authorization rules. Adds JWT authentication filter
+ before the UsernamePasswordAuthenticationFilter.</p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>http</code> - the HttpSecurity to configure</dd>
@@ -199,8 +206,8 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">org.springframework.web.cors.CorsConfigurationSource</span>&nbsp;<span class="element-name">corsConfigurationSource</span>()</div>
 <div class="block">Configures the CORS settings for the application.
 
- <p>Allows all origins, HTTP methods GET, POST, PUT, PATCH, DELETE, OPTIONS, and all headers.
- Exposes the "Authorization" header to clients.</p></div>
+ <p>Allows all origins, HTTP methods GET, POST, PUT, PATCH, DELETE, OPTIONS,
+ and all headers. Exposes the "Authorization" header to clients.</p></div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the CorsConfigurationSource for CORS configuration</dd>

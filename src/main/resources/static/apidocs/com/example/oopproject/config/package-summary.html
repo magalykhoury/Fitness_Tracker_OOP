@@ -68,9 +68,21 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="package-signature">package <span class="element-name">com.example.oopproject.config</span></div>
 <section class="package-description" id="package-description">
-<div class="block">This package contains configuration classes for the Fitness Tracker application.
- It includes security configurations, database connection setups, CORS settings,
- and API documentation configuration to set up the application's infrastructure.</div>
+<div class="block">Provides configuration classes for the Fitness Tracker API application.
+ <p>
+ This package contains Spring-based configuration components such as
+ environment-specific bean definitions and optional integration with tools
+ like Swagger/OpenAPI for generating interactive API documentation.
+ </p>
+
+ <p>
+ It helps manage application behavior across different runtime profiles 
+ (e.g., "default", "web") by enabling or disabling specific configurations.
+ </p></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>1.0.0</dd>
+</dl>
 </section>
 </div>
 <section class="summary">
@@ -108,21 +120,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Filter for authenticating requests using JWT (JSON Web Token).</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="OpenAPIConfig.html" title="class in com.example.oopproject.config">OpenAPIConfig</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ProdMongoConfig.html" title="class in com.example.oopproject.config">ProdMongoConfig</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Configuration class for setting up the OpenAPI (Swagger) documentation.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ProdMongoConfig.html" title="class in com.example.oopproject.config">ProdMongoConfig</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Configuration class for MongoDB client and template setup in production and cloud environments.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ProfileConfiguration.html" title="class in com.example.oopproject.config">ProfileConfiguration</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Configuration class for OpenAPI documentation setup based on active Spring profiles.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SecurityConfig.html" title="class in com.example.oopproject.config">SecurityConfig</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Security configuration class that sets up HTTP security, CORS, session management, and JWT authentication filter.</div>
+<div class="block">Security configuration class that sets up HTTP security, CORS, session management,
+ and JWT authentication filter.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="StartupLogger.html" title="class in com.example.oopproject.config">StartupLogger</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
