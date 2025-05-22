@@ -89,6 +89,12 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations">@SpringBootApplication
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">FitnessApiApplication</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Main class for the Fitness Tracker API application.
+
+ <p>This class bootstraps the Spring Boot application and performs
+ an initial test of the MongoDB connection at startup.
+
+ <p>It logs important events such as startup progress and environment profiles.</div>
 </div>
 </section>
 <section class="summary">
@@ -119,10 +125,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#main(java.lang.String%5B%5D)" class="member-name-link">main</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">The main entry point of the application.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.springframework.boot.CommandLineRunner</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testConnection(org.springframework.core.env.Environment)" class="member-name-link">testConnection</a><wbr>(org.springframework.core.env.Environment&nbsp;environment)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">A <code>CommandLineRunner</code> bean that runs at application startup
+ to test the MongoDB connection using a given connection string.</div>
+</div>
 </div>
 </div>
 </div>
@@ -161,6 +172,11 @@ loadScripts(document, 'script');</script>
 <h3>main</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">main</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</span></div>
+<div class="block">The main entry point of the application.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>args</code> - command-line arguments passed to the application</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -170,6 +186,16 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="annotations">@Bean
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">org.springframework.boot.CommandLineRunner</span>&nbsp;<span class="element-name">testConnection</span><wbr><span class="parameters">(org.springframework.core.env.Environment&nbsp;environment)</span></div>
+<div class="block">A <code>CommandLineRunner</code> bean that runs at application startup
+ to test the MongoDB connection using a given connection string.
+
+ <p>It also logs the active Spring profiles and available MongoDB databases.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>environment</code> - the Spring environment to retrieve active profiles</dd>
+<dt>Returns:</dt>
+<dd>a runnable function that tests MongoDB connection</dd>
+</dl>
 </div>
 </section>
 </li>

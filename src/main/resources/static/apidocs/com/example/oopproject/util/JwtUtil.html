@@ -90,6 +90,11 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations">@Component
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">JwtUtil</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Utility class for handling JSON Web Token (JWT) operations such as
+ generating tokens, extracting information, and validating tokens.
+ <p>
+ This class is used in authentication workflows to securely issue and validate tokens
+ based on a secret key.</div>
 </div>
 </section>
 <section class="summary">
@@ -120,14 +125,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#extractUsername(java.lang.String)" class="member-name-link">extractUsername</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;token)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Extracts the username (subject) from the given JWT token.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#generateToken(java.lang.String)" class="member-name-link">generateToken</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;username)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Generates a JWT token for the given username.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#validateToken(java.lang.String,org.springframework.security.core.userdetails.UserDetails)" class="member-name-link">validateToken</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;token,
  org.springframework.security.core.userdetails.UserDetails&nbsp;userDetails)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Validates a JWT token by checking whether the username inside the token
+ matches the provided <code>UserDetails</code> object's username.</div>
+</div>
 </div>
 </div>
 </div>
@@ -166,6 +178,13 @@ loadScripts(document, 'script');</script>
 <h3>generateToken</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">generateToken</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;username)</span></div>
+<div class="block">Generates a JWT token for the given username.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>username</code> - the username for which the token is generated</dd>
+<dt>Returns:</dt>
+<dd>a JWT token as a String</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -174,6 +193,13 @@ loadScripts(document, 'script');</script>
 <h3>extractUsername</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">extractUsername</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;token)</span></div>
+<div class="block">Extracts the username (subject) from the given JWT token.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>token</code> - the JWT token to parse</dd>
+<dt>Returns:</dt>
+<dd>the username extracted from the token</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -183,6 +209,15 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">validateToken</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/23/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;token,
  org.springframework.security.core.userdetails.UserDetails&nbsp;userDetails)</span></div>
+<div class="block">Validates a JWT token by checking whether the username inside the token
+ matches the provided <code>UserDetails</code> object's username.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>token</code> - the JWT token to validate</dd>
+<dd><code>userDetails</code> - the user details to compare with</dd>
+<dt>Returns:</dt>
+<dd>true if the token is valid; false otherwise</dd>
+</dl>
 </div>
 </section>
 </li>

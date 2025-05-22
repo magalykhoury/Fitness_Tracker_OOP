@@ -13,17 +13,40 @@ import org.springframework.core.env.Environment;
 
 import java.util.Arrays;
 
+/**
+ * Main class for the Fitness Tracker API application.
+ *
+ * <p>This class bootstraps the Spring Boot application and performs
+ * an initial test of the MongoDB connection at startup.
+ *
+ * <p>It logs important events such as startup progress and environment profiles.
+ */
 @SpringBootApplication
 public class FitnessApiApplication {
 
+    /** Logger instance for logging application events and MongoDB test results. */
     private static final Logger logger = LoggerFactory.getLogger(FitnessApiApplication.class);
 
+    /**
+     * The main entry point of the application.
+     *
+     * @param args command-line arguments passed to the application
+     */
     public static void main(String[] args) {
         logger.info("Starting Fitness Tracker Application");
         ApplicationContext ctx = SpringApplication.run(FitnessApiApplication.class, args);
         logger.info("Application started successfully");
     }
 
+    /**
+     * A {@link CommandLineRunner} bean that runs at application startup
+     * to test the MongoDB connection using a given connection string.
+     *
+     * <p>It also logs the active Spring profiles and available MongoDB databases.
+     *
+     * @param environment the Spring environment to retrieve active profiles
+     * @return a runnable function that tests MongoDB connection
+     */
     @Bean
     public CommandLineRunner testConnection(Environment environment) {
         return args -> {
@@ -31,11 +54,9 @@ public class FitnessApiApplication {
             logger.info("TESTING MONGODB CONNECTION");
             logger.info("=====================================================");
 
-            // Log active profiles
             String[] activeProfiles = environment.getActiveProfiles();
             logger.info("Active profiles: {}", String.join(", ", activeProfiles));
 
-            // Test direct connection to MongoDB
             String connectionString = "mongodb+srv://magaly:mohamad@cluster0.ientrf8.mongodb.net/fitness_tracker?retryWrites=true&w=majority";
             logger.info("Testing direct connection to MongoDB with URI: mongodb+srv://magaly:***@cluster0.ientrf8.mongodb.net/fitness_tracker");
 

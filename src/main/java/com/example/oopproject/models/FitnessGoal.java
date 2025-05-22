@@ -36,7 +36,6 @@ public class FitnessGoal {
     private Date createdAt;
     private Date updatedAt;
 
-    // Default constructor
     public FitnessGoal() {
         this.startDate = new Date();
         this.status = "in progress";
@@ -44,7 +43,6 @@ public class FitnessGoal {
         this.updatedAt = new Date();
     }
 
-    // Constructor with required fields
     public FitnessGoal(String userId, String goalType, String description,
                        double startValue, double targetValue, Date targetDate) {
         this.userId = userId;

@@ -1,17 +1,15 @@
 /**
- * Provides configuration classes for the Fitness Tracker API application.
- * <p>
- * This package contains Spring-based configuration components such as
- * environment-specific bean definitions and optional integration with tools
- * like Swagger/OpenAPI for generating interactive API documentation.
- * </p>
+ * This package contains Data Transfer Object (DTO) classes
+ * used for transferring authentication-related data between
+ * the client and the server.
  *
- * <p>
- * It helps manage application behavior across different runtime profiles 
- * (e.g., "default", "web") by enabling or disabling specific configurations.
- * </p>
+ * <p>DTOs in this package include:
+ * <ul>
+ *     <li>{@link com.example.oopproject.dto.AuthRequest} - used to receive login credentials.</li>
+ *     <li>{@link com.example.oopproject.dto.AuthResponse} - used to return authentication tokens.</li>
+ * </ul>
  *
- * @since 1.0.0
- * @author [Your Name]
+ * <p>These classes are typically used in RESTful API endpoints to
+ * encapsulate request and response payloads related to user authentication.
  */
-package com.example.oopproject.config;
+package com.example.oopproject.dto;

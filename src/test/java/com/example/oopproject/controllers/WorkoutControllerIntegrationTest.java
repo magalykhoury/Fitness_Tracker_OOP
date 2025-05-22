@@ -214,7 +214,7 @@ public class WorkoutControllerIntegrationTest {
             workoutRepository.save(workout);
         }
 
-        // Verify the sorting works correctly (descending order by duration)
+
         mockMvc.perform(get("/api/workouts/paginated")
                         .param("page", "0")
                         .param("size", "3")
@@ -245,7 +245,7 @@ public class WorkoutControllerIntegrationTest {
         currentWorkout.setDate(formatter.parse("2025-05-15"));
         workoutRepository.save(currentWorkout);
 
-        // Test filtering
+
         mockMvc.perform(get("/api/workouts/filterByDate")
                         .param("startDate", "2025-05-01")
                         .param("endDate", "2025-05-31"))
@@ -257,7 +257,7 @@ public class WorkoutControllerIntegrationTest {
     @Test
     @WithMockUser(roles = "USER")
     void testSearchWorkouts() throws Exception {
-        // Create workout with specific type and userId
+
         Workout specialWorkout = new Workout();
         specialWorkout.setName("Special Workout");
         specialWorkout.setWorkoutType("hiit");
@@ -266,14 +266,14 @@ public class WorkoutControllerIntegrationTest {
         specialWorkout.setDate(new Date());
         workoutRepository.save(specialWorkout);
 
-        // Test search by type only
+
         mockMvc.perform(get("/api/workouts/search")
                         .param("workoutType", "hiit"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name").value("Special Workout"));
 
-        // Test search by type and userId
+
         mockMvc.perform(get("/api/workouts/search")
                         .param("workoutType", "hiit")
                         .param("userId", "user123"))
@@ -281,7 +281,7 @@ public class WorkoutControllerIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].userId").value("user123"));
 
-        // Test search with non-existent userId
+
         mockMvc.perform(get("/api/workouts/search")
                         .param("workoutType", "hiit")
                         .param("userId", "nonexistent"))

@@ -91,7 +91,7 @@ public class CommandLineInterface implements CommandLineRunner {
                     browseWorkouts();
                     break;
                 case 4:
-                    adminLogin();  // Admin login prompt
+                    adminLogin();
                     break;
                 case 5:
                     exit = true;
@@ -166,7 +166,7 @@ public class CommandLineInterface implements CommandLineRunner {
                 if ("admin".equalsIgnoreCase(user.getRole())) {
                     adminMenu();
                 } else {
-                    userMenu(); // User menu will now have additional options
+                    userMenu();
                 }
             } else {
                 System.out.println("Incorrect password. Login failed.");
@@ -294,15 +294,13 @@ public class CommandLineInterface implements CommandLineRunner {
     private void paginatedWorkouts() {
         System.out.println("\n===== PAGINATED WORKOUTS =====");
 
-        // Get page number
+
         System.out.print("Enter page number (starting from 0): ");
         int page = Integer.parseInt(scanner.nextLine());
 
-        // Get page size
         System.out.print("Enter page size: ");
         int size = Integer.parseInt(scanner.nextLine());
 
-        // Get sort field
         System.out.println("Sort by:");
         System.out.println("1. Date");
         System.out.println("2. Workout Type");
@@ -339,8 +337,7 @@ public class CommandLineInterface implements CommandLineRunner {
         String sortDir = (dirChoice == 1) ? "asc" : "desc";
 
         try {
-            // Call a method in workoutService to get paginated and sorted workouts
-            // This method needs to be implemented in your WorkoutService
+
             List<Workout> workouts = workoutService.getPaginatedWorkouts(page, size, sortBy, sortDir);
 
             if (workouts.isEmpty()) {
@@ -379,9 +376,7 @@ public class CommandLineInterface implements CommandLineRunner {
         String endDate = scanner.nextLine();
 
         try {
-            // Call a method in workoutService to filter workouts by date
-            // This method needs to be implemented in your WorkoutService if not already
-            List<Workout> workouts = workoutService.filterByDateRange(startDate, endDate);
+                List<Workout> workouts = workoutService.filterByDateRange(startDate, endDate);
 
             if (workouts.isEmpty()) {
                 System.out.println("No workouts found in this date range.");
@@ -419,8 +414,7 @@ public class CommandLineInterface implements CommandLineRunner {
         String userId = scanner.nextLine();
 
         try {
-            // Call a method in workoutService to search workouts by type
-            // This method needs to be implemented in your WorkoutService
+
             List<Workout> workouts = workoutService.searchWorkouts(workoutType, userId.isEmpty() ? null : userId);
 
             if (workouts.isEmpty()) {
@@ -483,11 +477,10 @@ public class CommandLineInterface implements CommandLineRunner {
         System.out.print("Enter page number (starting from 0): ");
         int page = Integer.parseInt(scanner.nextLine());
 
-        // Get page size
+
         System.out.print("Enter page size: ");
         int size = Integer.parseInt(scanner.nextLine());
 
-        // Get sort field
         System.out.println("Sort by:");
         System.out.println("1. Name");
         System.out.println("2. Sets");
@@ -524,8 +517,7 @@ public class CommandLineInterface implements CommandLineRunner {
         String direction = (dirChoice == 1) ? "asc" : "desc";
 
         try {
-            // Call a method in exerciseService to get paginated and sorted exercises
-            // This method needs to be implemented in your ExerciseService
+
             Page<Exercise> exercisePage = exerciseService.getExercisesPaginated(page, size, sortBy, direction);
             List<Exercise> exercises = exercisePage.getContent();
 
