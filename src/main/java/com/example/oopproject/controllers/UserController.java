@@ -35,7 +35,6 @@ public class UserController {
         List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
     /**
      * Get paginated list of users with sorting.
      * @param page page number (default 0)
