@@ -627,11 +627,33 @@ public class CommandLineInterface implements CommandLineRunner {
     private void deleteWorkout() {
         System.out.print("\nEnter workout ID to delete: ");
         String id = scanner.nextLine();
+
         try {
-            workoutService.deleteWorkout(id);
-            System.out.println("Workout deleted successfully.");
+            // First check if the workout exists
+            Workout existingWorkout = workoutService.getWorkoutById(id);
+            if (existingWorkout == null) {
+                System.out.println("Error: Workout with ID '" + id + "' not found.");
+                return;
+            }
+
+            System.out.println("\nWorkout found:");
+            System.out.println("Type: " + existingWorkout.getWorkoutType());
+            System.out.println("Duration: " + existingWorkout.getDuration() + " minutes");
+            System.out.println("Calories: " + existingWorkout.getCaloriesBurned());
+            System.out.println("Date: " + dateFormat.format(existingWorkout.getDate()));
+
+            System.out.print("\nAre you sure you want to delete this workout? (y/N): ");
+            String confirmation = scanner.nextLine().trim().toLowerCase();
+
+            if ("y".equals(confirmation) || "yes".equals(confirmation)) {
+                workoutService.deleteWorkout(id);
+                System.out.println("Workout deleted successfully.");
+            } else {
+                System.out.println("Deletion cancelled.");
+            }
+
         } catch (Exception e) {
-            System.out.println("Failed to delete workout: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
     /**
@@ -751,11 +773,35 @@ public class CommandLineInterface implements CommandLineRunner {
     private void deleteExercise() {
         System.out.print("\nEnter exercise ID to delete: ");
         String id = scanner.nextLine();
+
         try {
-            exerciseService.deleteExercise(id);
-            System.out.println("Exercise deleted successfully.");
+            // First check if the exercise exists
+            Exercise existingExercise = exerciseService.getExerciseById(id);
+            if (existingExercise == null) {
+                System.out.println("Error: Exercise with ID '" + id + "' not found.");
+                return;
+            }
+
+            // Display exercise details for confirmation
+            System.out.println("\nExercise found:");
+            System.out.println("Name: " + existingExercise.getName());
+            System.out.println("Sets: " + existingExercise.getSets());
+            System.out.println("Reps: " + existingExercise.getReps());
+            System.out.println("Weight: " + existingExercise.getWeight() + " kg");
+
+            // Ask for confirmation
+            System.out.print("\nAre you sure you want to delete this exercise? (y/N): ");
+            String confirmation = scanner.nextLine().trim().toLowerCase();
+
+            if ("y".equals(confirmation) || "yes".equals(confirmation)) {
+                exerciseService.deleteExercise(id);
+                System.out.println("Exercise deleted successfully.");
+            } else {
+                System.out.println("Deletion cancelled.");
+            }
+
         } catch (Exception e) {
-            System.out.println("Failed to delete exercise: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
     /**

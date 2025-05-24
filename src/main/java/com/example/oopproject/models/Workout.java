@@ -21,7 +21,7 @@ public class Workout {
      * Unique identifier for the workout.
      */
     @Id
-    private String id;  // Changed from String to ObjectId
+    private String id;
 
     /**
      * Name of the workout.
