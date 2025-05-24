@@ -16,7 +16,7 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test") // Activate the test profile
+@ActiveProfiles("test")
 public class ExerciseControllerIntegrationTest {
 
     @LocalServerPort

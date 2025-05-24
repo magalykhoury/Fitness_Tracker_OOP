@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class WorkoutControllerIntegrationTest {
 
     @Autowired
@@ -42,7 +44,6 @@ public class WorkoutControllerIntegrationTest {
 
     @BeforeEach
     void setup() {
-        // Configure MockMvc with security
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
@@ -50,7 +51,6 @@ public class WorkoutControllerIntegrationTest {
 
         workoutRepository.deleteAll();
 
-        // Create test workout 1
         Workout workout1 = new Workout();
         workout1.setName("Pushups");
         workout1.setWorkoutType("strength");
@@ -59,7 +59,6 @@ public class WorkoutControllerIntegrationTest {
         workout1.setDate(new Date());
         workoutRepository.save(workout1);
 
-        // Create test workout 2
         Workout workout2 = new Workout();
         workout2.setName("Running");
         workout2.setWorkoutType("cardio");
@@ -93,7 +92,7 @@ public class WorkoutControllerIntegrationTest {
         mockMvc.perform(post("/api/workouts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(workoutJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Cycling"))
                 .andExpect(jsonPath("$.workoutType").value("cardio"))
                 .andExpect(jsonPath("$.duration").value(45))
@@ -103,17 +102,14 @@ public class WorkoutControllerIntegrationTest {
     @Test
     @WithMockUser(roles = "USER")
     void testGetWorkoutById() throws Exception {
-        // First get all workouts to get an ID
         String responseJson = mockMvc.perform(get("/api/workouts"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
 
-        // Extract the ID from the response (simplified approach)
         String id = responseJson.split("\"id\":\"")[1].split("\"")[0];
 
-        // Now test getting by ID
         mockMvc.perform(get("/api/workouts/" + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id));
@@ -122,7 +118,6 @@ public class WorkoutControllerIntegrationTest {
     @Test
     @WithMockUser(roles = "USER")
     void testUpdateWorkout() throws Exception {
-        // First create a workout
         String createJson = """
                 {
                     "name": "Yoga",
@@ -136,24 +131,22 @@ public class WorkoutControllerIntegrationTest {
         String createResponse = mockMvc.perform(post("/api/workouts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
 
         String id = createResponse.split("\"id\":\"")[1].split("\"")[0];
 
-        // Now update it
         String updateJson = """
-    {
-        "name": "Advanced Yoga",
-        "workoutType": "flexibility",
-        "duration": 45,
-        "caloriesBurned": 200,
-        "date": "2025-05-17"
-    }
-    """;
-
+        {
+            "name": "Advanced Yoga",
+            "workoutType": "flexibility",
+            "duration": 45,
+            "caloriesBurned": 200,
+            "date": "2025-05-17"
+        }
+        """;
 
         mockMvc.perform(put("/api/workouts/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -167,7 +160,6 @@ public class WorkoutControllerIntegrationTest {
     @Test
     @WithMockUser(roles = "USER")
     void testDeleteWorkout() throws Exception {
-        // First create a workout
         String createJson = """
                 {
                     "name": "Swimming",
@@ -181,18 +173,16 @@ public class WorkoutControllerIntegrationTest {
         String createResponse = mockMvc.perform(post("/api/workouts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
 
         String id = createResponse.split("\"id\":\"")[1].split("\"")[0];
 
-        // Now delete it
         mockMvc.perform(delete("/api/workouts/" + id))
                 .andExpect(status().isNoContent());
 
-        // Verify it's gone
         mockMvc.perform(get("/api/workouts/" + id))
                 .andExpect(status().isNotFound());
     }
@@ -200,20 +190,17 @@ public class WorkoutControllerIntegrationTest {
     @Test
     @WithMockUser(roles = "USER")
     void testGetPaginatedWorkouts() throws Exception {
-        // Delete any existing workouts to ensure we start clean
         workoutRepository.deleteAll();
 
-        // Create workouts with specific durations to test pagination order
         for (int i = 0; i < 5; i++) {
             Workout workout = new Workout();
             workout.setName("Workout " + i);
             workout.setWorkoutType("test");
-            workout.setDuration(10 + i); // This creates workouts with durations 10, 11, 12, 13, 14
+            workout.setDuration(10 + i);
             workout.setCaloriesBurned(100 + i * 10);
             workout.setDate(new Date());
             workoutRepository.save(workout);
         }
-
 
         mockMvc.perform(get("/api/workouts/paginated")
                         .param("page", "0")
@@ -221,20 +208,20 @@ public class WorkoutControllerIntegrationTest {
                         .param("sortBy", "duration")
                         .param("sortDir", "desc"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3))) // Should return 3 results per page
-                .andExpect(jsonPath("$[0].duration").value(14)); // First result should be duration 14 (highest)
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].duration").value(14));
     }
 
     @Test
     @WithMockUser(roles = "USER")
     void testFilterByDateRange() throws Exception {
-        // Create workouts with specific dates
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         Workout pastWorkout = new Workout();
         pastWorkout.setName("Past Workout");
         pastWorkout.setWorkoutType("test");
         pastWorkout.setDuration(30);
+        pastWorkout.setCaloriesBurned(150);
         pastWorkout.setDate(formatter.parse("2025-04-01"));
         workoutRepository.save(pastWorkout);
 
@@ -242,9 +229,9 @@ public class WorkoutControllerIntegrationTest {
         currentWorkout.setName("Current Workout");
         currentWorkout.setWorkoutType("test");
         currentWorkout.setDuration(30);
+        currentWorkout.setCaloriesBurned(150);
         currentWorkout.setDate(formatter.parse("2025-05-15"));
         workoutRepository.save(currentWorkout);
-
 
         mockMvc.perform(get("/api/workouts/filterByDate")
                         .param("startDate", "2025-05-01")
@@ -257,15 +244,14 @@ public class WorkoutControllerIntegrationTest {
     @Test
     @WithMockUser(roles = "USER")
     void testSearchWorkouts() throws Exception {
-
         Workout specialWorkout = new Workout();
         specialWorkout.setName("Special Workout");
         specialWorkout.setWorkoutType("hiit");
         specialWorkout.setDuration(20);
+        specialWorkout.setCaloriesBurned(200);
         specialWorkout.setUserId("user123");
         specialWorkout.setDate(new Date());
         workoutRepository.save(specialWorkout);
-
 
         mockMvc.perform(get("/api/workouts/search")
                         .param("workoutType", "hiit"))
@@ -273,14 +259,12 @@ public class WorkoutControllerIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name").value("Special Workout"));
 
-
         mockMvc.perform(get("/api/workouts/search")
                         .param("workoutType", "hiit")
                         .param("userId", "user123"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].userId").value("user123"));
-
 
         mockMvc.perform(get("/api/workouts/search")
                         .param("workoutType", "hiit")

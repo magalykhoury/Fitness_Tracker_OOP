@@ -23,8 +23,6 @@ public class AdminController {
     @Autowired
     private ExerciseService exerciseService;
 
-    // WORKOUTS
-
     /**
      * Creates a new workout.
      * @param workout the workout data to create
@@ -64,7 +62,6 @@ public class AdminController {
         return workoutService.getAllWorkouts();
     }
 
-    // EXERCISES
 
     /**
      * Creates a new exercise.
